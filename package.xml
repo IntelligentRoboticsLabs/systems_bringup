@@ -15,6 +15,7 @@
 
   <depend>attention_system</depend>
   <depend>perception_system</depend>
+  <depend>navigation_system</depend>
 
   <exec_depend>yolov8_bringup</exec_depend>
   <exec_depend>rclpy_cascade_lifecycle</exec_depend>

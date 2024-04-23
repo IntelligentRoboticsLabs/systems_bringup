@@ -16,4 +16,6 @@ perception_people_detection:
     target_frame: head_front_camera_link
     debug: false
 
-
+navigation_system:
+  ros__parameters:
+    nodes: ['scan_raw_node', 'nav_vel_node']
