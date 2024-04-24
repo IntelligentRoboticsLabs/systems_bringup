@@ -18,4 +18,15 @@ perception_people_detection:
 
 navigation_system:
   ros__parameters:
-    nodes: ['scan_raw_node', 'nav_vel_node']
+    nodes: ['map_server',
+            'amcl',
+            'slam_toolbox',
+            'controller_server',
+            'smoother_server',
+            'planner_server',
+            'behavior_server',
+            'bt_navigator',
+            'waypoint_follower',
+            'velocity_smoother'
+            ]
+    mode: 'amcl'
