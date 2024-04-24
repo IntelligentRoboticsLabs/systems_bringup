@@ -20,6 +20,7 @@
 #include "attention_system/AttentionServerNode.hpp"
 #include "perception_system/PeopleDetectionNode.hpp"
 #include "perception_system/ObjectsDetectionNode.hpp"
+#include "navigation_system/NavigationSystem.hpp"
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
@@ -51,6 +52,7 @@ int main(int argc, char ** argv)
     {std::make_shared<attention_system::AttentionServerNode>(node_options), RT},
     {std::make_shared<perception_system::PeopleDetectionNode>(node_options), RT},
     {std::make_shared<perception_system::ObjectsDetectionNode>(node_options), RT},
+    {std::make_shared<navigation_system::NavigationSystem>(node_options), NORT},
   };
 
   // Adding systems nodes to the appropiate executor, depending of its RtType

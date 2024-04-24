@@ -15,6 +15,7 @@ find_package(rclcpp_cascade_lifecycle REQUIRED)
 
 find_package(attention_system REQUIRED)
 find_package(perception_system REQUIRED)
+find_package(navigation_system REQUIRED)
 
 
 set(dependencies
@@ -24,6 +25,7 @@ set(dependencies
 
   attention_system
   perception_system
+  navigation_system
 )
 
 add_executable(systems_main src/systems_main.cpp)

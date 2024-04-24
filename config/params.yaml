@@ -16,4 +16,17 @@ perception_people_detection:
     target_frame: head_front_camera_link
     debug: false
 
-
+navigation_system:
+  ros__parameters:
+    nodes: ['map_server',
+            'amcl',
+            'slam_toolbox',
+            'controller_server',
+            'smoother_server',
+            'planner_server',
+            'behavior_server',
+            'bt_navigator',
+            'waypoint_follower',
+            'velocity_smoother'
+            ]
+    mode: 'amcl'
