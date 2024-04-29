@@ -25,18 +25,37 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     pkg_dir = get_package_share_directory('systems_bringup')
+    robocup_dir = get_package_share_directory('robocup_bringup')
+    nav_dir = get_package_share_directory('navigation_system')
     yolo_dir = get_package_share_directory('yolov8_bringup')
 
     namespace = LaunchConfiguration('namespace')
+    rviz = LaunchConfiguration('rviz')
 
     declare_namespace_cmd = DeclareLaunchArgument(
         'namespace',
         default_value='',
         description='Namespace')
+    
+    declare_rviz_cmd = DeclareLaunchArgument(
+        'rviz',
+        default_value='False',
+        description='Open RViz')
+
+    navigation_system_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(nav_dir, 'launch', 'navigation_system.launch.py')),
+        launch_arguments={
+            'namespace': namespace,
+            'use_sim_time': 'false',
+            'rviz': rviz,
+            'map': os.path.join(robocup_dir, 'maps', 'lab_robocup.yaml'),
+            'params_file': os.path.join(robocup_dir, 'params', 'tiago_nav_params.yaml')
+        }.items()
+    )
 
     config = os.path.join(os.path.join(pkg_dir, 'config', 'params.yaml'))
 
-    attention_manager_cmd = Node(
+    system_manager_cmd = Node(
         package='systems_bringup',
         executable='systems_main',
         output='screen',
@@ -58,10 +77,16 @@ def generate_launch_description():
             }.items()
     )
 
-    ld = LaunchDescription()
+    dialog_system_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(robocup_dir, 'launch', 'dialog.launch.py'))
+    )
 
+    ld = LaunchDescription()
     ld.add_action(declare_namespace_cmd)
-    ld.add_action(attention_manager_cmd)
+    ld.add_action(declare_rviz_cmd)
+    ld.add_action(navigation_system_cmd)
+    ld.add_action(dialog_system_cmd)
+    ld.add_action(system_manager_cmd)
     ld.add_action(yolo3d)
 
     return ld
